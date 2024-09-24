@@ -1,0 +1,1091 @@
+<html><head><base href="https://Aplicacion-Administracion-Arquidiocesis.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplicación de Administración de Arquidiócesis</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+    }
+    .app-container {
+        display: flex;
+        min-height: 100vh;
+    }
+    .sidebar {
+        width: 250px;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .sidebar h2 {
+        color: #3498db;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .menu-item {
+        padding: 12px 15px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+        background-color: #34495e;
+        transform: translateX(5px);
+    }
+    .main-content {
+        flex-grow: 1;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    .header {
+        background-color: #3498db;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+        margin: 0;
+        font-size: 1.8em;
+    }
+    .admin-screen, .admin-sacerdotes, .admin-laicos, .admin-catalogos, .admin-parroquias, .consulta-actas, .configuracion {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .registry-list, .donations-summary, .lista-sacerdotes, .formulario-sacerdote,
+    .lista-laicos, .formulario-laico, .catalogo-cuentas, .lista-parroquias,
+    .formulario-parroquia, .filtros-actas, .resultados-actas {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        flex: 1 1 300px;
+    }
+    input[type="text"], input[type="date"], input[type="email"], input[type="tel"],
+    select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="date"]:focus, input[type="email"]:focus,
+    input[type="tel"]:focus, select:focus, textarea:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+    .btn, button[type="submit"], .btn-guardar {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .btn:hover, button[type="submit"]:hover, .btn-guardar:hover {
+        background-color: #2980b9;
+    }
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    .paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .paginacion button {
+        margin: 0 10px;
+    }
+    .configuracion {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .configuracion h2 {
+        color: #3498db;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-top: 20px;
+    }
+    .configuracion .form-group {
+        margin-bottom: 15px;
+    }
+    .configuracion label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .configuracion input[type="text"],
+    .configuracion input[type="email"],
+    .configuracion input[type="number"],
+    .configuracion select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .configuracion input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    .foto-laico-container {
+        width: 60px;  
+        height: 60px; 
+        margin-bottom: 10px;
+    }
+    #foto-laico-preview {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+    }
+    .formulario-sacerdote {
+        display: grid;
+        grid-template-columns: 80px 1fr; 
+        gap: 20px;
+    }
+    .formulario-sacerdote form {
+        grid-column: 2 / 3;
+    }
+    .laico-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .foto-laico {
+        width: 40px;  
+        height: 40px; 
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+</style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <h2>Admin Arquidiócesis</h2>
+            <div class="menu-item">Tablero</div>
+            <div class="menu-item" id="admin-sacerdotes">Administración de Sacerdotes</div>
+            <div class="menu-item" id="registro-laicos">Registro de Laicos</div>
+            <div class="menu-item">Ingresos y Donaciones</div>
+            <div class="menu-item">Egresos</div>
+            <div class="menu-item" id="consulta-actas">Consulta de Actas Sacramentales</div>
+            <div class="menu-item">Informes</div>
+            <div class="menu-item">Configuración</div>
+            <div class="menu-item" id="code-menu-item">Código</div>
+            <div class="menu-item" id="admin-catalogos">Admin Catálogos Admtvos</div>
+            <div class="menu-item" id="admin-parroquias">Admin Parroquias</div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Administración de Arquidiócesis</h1>
+            </div>
+            <div class="admin-screen">
+                <div class="registry-list">
+                    <h2>Administración de Sacerdotes</h2>
+                    <div class="registry-item">
+                        <span>P. Juan Pérez</span>
+                        <span>Pastor</span>
+                    </div>
+                    <div class="registry-item">
+                        <span>Diácono Santiago Gómez</span>
+                        <span>Diácono</span>
+                    </div>
+                </div>
+                <div class="donations-summary">
+                    <h2>Donaciones Recientes</h2>
+                    <div class="donation-item">
+                        <span>Campaña Anual</span>
+                        <span>$5,000.00</span>
+                    </div>
+                    <div class="donation-item">
+                        <span>Fondo de Construcción</span>
+                        <span>$10,000.00</span>
+                    </div>
+                    <hr>
+                    <div class="donation-item">
+                        <strong>Total</strong>
+                        <strong>$15,000.00</strong>
+                    </div>
+                    <button class="btn">Registrar Nueva Donación</button>
+                </div>
+            </div>
+            <div class="consulta-actas">
+                <div class="filtros-actas">
+                    <h2>Filtros de Búsqueda</h2>
+                    <form id="form-consulta-actas">
+                        <div class="form-group">
+                            <label for="tipo-acta">Tipo de Acta:</label>
+                            <select id="tipo-acta" required>
+                                <option value="">Seleccione un tipo</option>
+                                <option value="bautizo">Bautizo</option>
+                                <option value="confirmacion">Confirmación</option>
+                                <option value="matrimonio">Matrimonio</option>
+                                <option value="primera-comunion">Primera Comunión</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="parroquia-acta">Parroquia:</label>
+                            <select id="parroquia-acta" required>
+                                <option value="">Seleccione una parroquia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-desde">Fecha Desde:</label>
+                            <input type="date" id="fecha-desde" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-hasta">Fecha Hasta:</label>
+                            <input type="date" id="fecha-hasta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre-persona">Nombre de la Persona:</label>
+                            <input type="text" id="nombre-persona" placeholder="Nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label for="numero-libro">Número de Libro:</label>
+                            <input type="text" id="numero-libro" placeholder="Ejemplo: 001">
+                        </div>
+                        <div class="form-group">
+                            <label for="numero-foja">Número de Foja:</label>
+                            <input type="text" id="numero-foja" placeholder="Ejemplo: 123">
+                        </div>
+                        <button type="submit">Buscar</button>
+                    </form>
+                </div>
+                <div class="resultados-actas">
+                    <h2>Resultados de la Búsqueda</h2>
+                    <div class="resultados-controles">
+                        <button id="exportar-pdf">Exportar a PDF</button>
+                        <button id="exportar-excel">Exportar a Excel</button>
+                    </div>
+                    <table id="tabla-resultados-actas">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Acta</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Parroquia</th>
+                                <th>Libro</th>
+                                <th>Foja</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="paginacion">
+                        <button id="anterior-pagina">Anterior</button>
+                        <span id="pagina-actual">Página 1 de 1</span>
+                        <button id="siguiente-pagina">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+            <div class="configuracion">
+                <form id="form-configuracion">
+                    <h2>Configuración General</h2>
+                    <div class="form-group">
+                        <label for="nombre-arquidiocesis">Nombre de la Arquidiócesis:</label>
+                        <input type="text" id="nombre-arquidiocesis" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-admin">Email del Administrador:</label>
+                        <input type="email" id="email-admin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idioma">Idioma por defecto:</label>
+                        <select id="idioma" required>
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <h2>Configuración de Seguridad</h2>
+                    <div class="form-group">
+                        <label for="tiempo-sesion">Tiempo máximo de sesión (minutos):</label>
+                        <input type="number" id="tiempo-sesion" min="5" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="intentos-login">Intentos máximos de login:</label>
+                        <input type="number" id="intentos-login" min="3" max="10" required>
+                    </div>
+                    <h2>Configuración de Notificaciones</h2>
+                    <div class="form-group">
+                        <label for="notif-email">
+                            <input type="checkbox" id="notif-email">
+                            Habilitar notificaciones por email
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="notif-sistema">
+                            <input type="checkbox" id="notif-sistema">
+                            Habilitar notificaciones del sistema
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-guardar">Guardar Configuración</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <script>
+        let parroquias = [
+            { id: 1, numero: '001', nombre: 'San Juan Bautista', ciudad: 'Ciudad de México' },
+            { id: 2, numero: '002', nombre: 'Nuestra Señora de Guadalupe', ciudad: 'Ciudad de México' },
+            { id: 3, numero: '003', nombre: 'San Francisco de Asís', ciudad: 'Ciudad de México' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const mainContent = document.querySelector('.main-content');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (this.id === 'code-menu-item') {
+                        mostrarVistaDecodigo();
+                    } else if (this.id === 'admin-sacerdotes') {
+                        mostrarAdministracionSacerdotes();
+                    } else if (this.id === 'registro-laicos') {
+                        mostrarRegistroLaicos();
+                    } else if (this.id === 'admin-catalogos') {
+                        mostrarAdminCatalogos();
+                    } else if (this.id === 'admin-parroquias') {
+                        mostrarAdminParroquias();
+                    } else if (this.id === 'consulta-actas') {
+                        mostrarConsultaActas();
+                    } else if (this.textContent === 'Configuración') {
+                        mostrarConfiguracion();
+                    } else {
+                        alert(`Navegando a ${this.textContent}`);
+                    }
+                });
+            });
+
+            const botonRegistrarDonacion = document.querySelector('.btn');
+            botonRegistrarDonacion.addEventListener('click', function() {
+                alert('¡Nueva donación registrada!');
+            });
+
+            const conexion = new signalR.HubConnectionBuilder()
+                .withUrl("/hubpos")
+                .build();
+
+            conexion.start().then(function () {
+                console.log("SignalR Conectado");
+            }).catch(function (err) {
+                console.error("Error al conectar SignalR:", err.toString());
+            });
+
+            let sacerdotes = [
+                { id: 1, nombre: 'P. Juan Pérez', fechaNacimiento: '1980-05-15', fechaOrdenacion: '2005-06-20', posicion: 'Párroco', foto: 'placeholder.jpg' },
+                { id: 2, nombre: 'P. Carlos Gómez', fechaNacimiento: '1975-09-10', fechaOrdenacion: '2000-07-15', posicion: 'Vicario', foto: 'placeholder.jpg' },
+                { id: 3, nombre: 'P. Miguel Ángel Rodríguez', fechaNacimiento: '1985-03-20', fechaOrdenacion: '2010-08-01', posicion: 'Capellán', foto: 'placeholder.jpg' },
+                { id: 4, nombre: 'P. Francisco López', fechaNacimiento: '1970-11-05', fechaOrdenacion: '1995-12-10', posicion: 'Párroco', foto: 'placeholder.jpg' }
+            ];
+
+            function mostrarAdministracionSacerdotes() {
+                mainContent.innerHTML = `
+                    <div class="header">
+                        <h1>Administración de Sacerdotes</h1>
+                    </div>
+                    <div class="admin-sacerdotes">
+                        <div class="lista-sacerdotes">
+                            <h2>Lista de Sacerdotes</h2>
+                            <input type="text" id="buscar-sacerdote" placeholder="Buscar por nombre o posición...">
+                            <ul id="lista-sacerdotes">
+                            </ul>
+                        </div>
+                        <div class="formulario-sacerdote">
+                            <div class="foto-container">
+                                <img id="foto-preview" src="placeholder.jpg" alt="Vista previa de la foto">
+                            </div>
+                            <form id="form-sacerdote">
+                                <input type="hidden" id="sacerdote-id">
+                                <label for="foto">Fotografía:</label>
+                                <input type="file" id="foto" accept="image/*">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" id="nombre" required>
+                                <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+                                <input type="date" id="fecha-nacimiento" required>
+                                <label for="fecha-ordenacion">Fecha de Ordenación:</label>
+                                <input type="date" id="fecha-ordenacion" required>
+                                <label for="posicion">Posición:</label>
+                                <select id="posicion" required>
+                                    <option value="">Seleccione una posición</option>
+                                    <option value="Diácono">Diácono</option>
+                                    <option value="Presbítero">Presbítero</option>
+                                    <option value="Obispo">Obispo</option>
+                                    <option value="Arzobispo">Arzobispo</option>
+                                </select>
+                                <button type="submit">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+
+                const listaSacerdotes = document.getElementById('lista-sacerdotes');
+                const formSacerdote = document.getElementById('form-sacerdote');
+                const buscarSacerdote = document.getElementById('buscar-sacerdote');
+                
+                if (!listaSacerdotes || !formSacerdote || !buscarSacerdote) {
+                    console.error("No se pudieron encontrar todos los elementos necesarios");
+                    return;
+                }
+
+                function filtrarSacerdotes(busqueda) {
+                    return sacerdotes.filter(sacerdote => 
+                        sacerdote.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        sacerdote.posicion.toLowerCase().includes(busqueda.toLowerCase())
+                    );
+                }
+
+                function actualizarListaSacerdotes(sacerdotesFiltrados = sacerdotes) {
+                    listaSacerdotes.innerHTML = '';
+                    sacerdotesFiltrados.forEach(sacerdote => {
+                        const li = document.createElement('li');
+                        li.className = 'sacerdote-item';
+                        li.innerHTML = `
+                            <img src="${sacerdote.foto}" alt="${sacerdote.nombre}" class="foto-sacerdote">
+                            <span>${sacerdote.nombre} - ${sacerdote.posicion}</span>
+                        `;
+                        li.onclick = () => cargarSacerdote(sacerdote);
+                        listaSacerdotes.appendChild(li);
+                    });
+                }
+
+                function cargarSacerdote(sacerdote) {
+                    const idElement = document.getElementById('sacerdote-id');
+                    const nombreElement = document.getElementById('nombre');
+                    const fechaNacimientoElement = document.getElementById('fecha-nacimiento');
+                    const fechaOrdenacionElement = document.getElementById('fecha-ordenacion');
+                    const posicionElement = document.getElementById('posicion');
+                    const fotoPreviewElement = document.getElementById('foto-preview');
+
+                    if (idElement) idElement.value = sacerdote.id;
+                    if (nombreElement) nombreElement.value = sacerdote.nombre;
+                    if (fechaNacimientoElement) fechaNacimientoElement.value = sacerdote.fechaNacimiento;
+                    if (fechaOrdenacionElement) fechaOrdenacionElement.value = sacerdote.fechaOrdenacion;
+                    if (posicionElement) posicionElement.value = sacerdote.posicion;
+                    if (fotoPreviewElement) fotoPreviewElement.src = sacerdote.foto;
+                }
+
+                if (formSacerdote) {
+                    formSacerdote.onsubmit = (e) => {
+                        e.preventDefault();
+                        try {
+                            const sacerdote = {
+                                id: document.getElementById('sacerdote-id')?.value,
+                                nombre: document.getElementById('nombre')?.value,
+                                fechaNacimiento: document.getElementById('fecha-nacimiento')?.value,
+                                fechaOrdenacion: document.getElementById('fecha-ordenacion')?.value,
+                                posicion: document.getElementById('posicion')?.value,
+                                foto: document.getElementById('foto-preview')?.src
+                            };
+
+                            if (sacerdote.id) {
+                                const index = sacerdotes.findIndex(s => s.id == sacerdote.id);
+                                sacerdotes[index] = sacerdote;
+                            } else {
+                                sacerdote.id = sacerdotes.length + 1;
+                                sacerdotes.push(sacerdote);
+                            }
+
+                            actualizarListaSacerdotes();
+                            formSacerdote.reset();
+                            if (document.getElementById('foto-preview')) {
+                                document.getElementById('foto-preview').src = 'placeholder.jpg';
+                            }
+                            buscarSacerdote.value = '';
+                        } catch (error) {
+                            console.error("Error al procesar el formulario:", error);
+                        }
+                    };
+                }
+
+                buscarSacerdote.addEventListener('input', (e) => {
+                    const busqueda = e.target.value;
+                    const sacerdotesFiltrados = filtrarSacerdotes(busqueda);
+                    actualizarListaSacerdotes(sacerdotesFiltrados);
+                });
+
+                const fotoInput = document.getElementById('foto');
+                if (fotoInput) {
+                    fotoInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const fotoPreview = document.getElementById('foto-preview');
+                                if (fotoPreview) {
+                                    fotoPreview.src = e.target.result;
+                                }
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                actualizarListaSacerdotes();
+            }
+
+            let laicos = [
+                { id: 1, nombre: 'María González', fechaNacimiento: '1990-03-15', ministerio: 'Catequista', foto: 'placeholder.jpg' },
+                { id: 2, nombre: 'José Ramírez', fechaNacimiento: '1985-07-22', ministerio: 'Lector', foto: 'placeholder.jpg' },
+                { id: 3, nombre: 'Ana Martínez', fechaNacimiento: '1978-11-30', ministerio: 'Ministro Extraordinario', foto: 'placeholder.jpg' }
+            ];
+
+            function mostrarRegistroLaicos() {
+                mainContent.innerHTML = `
+                    <div class="header">
+                        <h1>Registro de Laicos</h1>
+                    </div>
+                    <div class="admin-laicos">
+                        <div class="lista-laicos">
+                            <h2>Lista de Laicos</h2>
+                            <input type="text" id="buscar-laico" placeholder="Buscar por nombre o ministerio...">
+                            <ul id="lista-laicos">
+                            </ul>
+                        </div>
+                        <div class="formulario-laico">
+                            <h2>Agregar/Editar Laico</h2>
+                            <form id="form-laico">
+                                <input type="hidden" id="laico-id">
+                                <div class="foto-laico-container">
+                                    <img id="foto-laico-preview" src="placeholder.jpg" alt="Vista previa de la foto">
+                                </div>
+                                <label for="foto-laico">Fotografía:</label>
+                                <input type="file" id="foto-laico" accept="image/*">
+                                <label for="nombre-laico">Nombre:</label>
+                                <input type="text" id="nombre-laico" required>
+                                <label for="fecha-nacimiento-laico">Fecha de Nacimiento:</label>
+                                <input type="date" id="fecha-nacimiento-laico" required>
+                                <label for="ministerio-laico">Ministerio:</label>
+                                <select id="ministerio-laico" required>
+                                    <option value="">Seleccione un ministerio</option>
+                                    <option value="Catequista">Catequista</option>
+                                    <option value="Lector">Lector</option>
+                                    <option value="Ministro Extraordinario">Ministro Extraordinario</option>
+                                    <option value="Coro">Coro</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <button type="submit">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+
+                const listaLaicos = document.getElementById('lista-laicos');
+                const formLaico = document.getElementById('form-laico');
+                const buscarLaico = document.getElementById('buscar-laico');
+
+                if (!listaLaicos || !formLaico || !buscarLaico) {
+                    console.error("No se pudieron encontrar todos los elementos necesarios");
+                    return;
+                }
+
+                function filtrarLaicos(busqueda) {
+                    return laicos.filter(laico => 
+                        laico.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        laico.ministerio.toLowerCase().includes(busqueda.toLowerCase())
+                    );
+                }
+
+                function actualizarListaLaicos(laicosFiltrados = laicos) {
+                    listaLaicos.innerHTML = '';
+                    laicosFiltrados.forEach(laico => {
+                        const li = document.createElement('li');
+                        li.className = 'laico-item';
+                        li.innerHTML = `
+                            <img src="${laico.foto}" alt="${laico.nombre}" class="foto-laico">
+                            <span>${laico.nombre} - ${laico.ministerio}</span>
+                        `;
+                        li.onclick = () => cargarLaico(laico);
+                        listaLaicos.appendChild(li);
+                    });
+                }
+
+                function cargarLaico(laico) {
+                    const idElement = document.getElementById('laico-id');
+                    const nombreElement = document.getElementById('nombre-laico');
+                    const fechaNacimientoElement = document.getElementById('fecha-nacimiento-laico');
+                    const ministerioElement = document.getElementById('ministerio-laico');
+                    const fotoPreviewElement = document.getElementById('foto-laico-preview');
+
+                    if (idElement) idElement.value = laico.id;
+                    if (nombreElement) nombreElement.value = laico.nombre;
+                    if (fechaNacimientoElement) fechaNacimientoElement.value = laico.fechaNacimiento;
+                    if (ministerioElement) ministerioElement.value = laico.ministerio;
+                    if (fotoPreviewElement) fotoPreviewElement.src = laico.foto;
+                }
+
+                if (formLaico) {
+                    formLaico.onsubmit = (e) => {
+                        e.preventDefault();
+                        try {
+                            const laico = {
+                                id: document.getElementById('laico-id')?.value,
+                                nombre: document.getElementById('nombre-laico')?.value,
+                                fechaNacimiento: document.getElementById('fecha-nacimiento-laico')?.value,
+                                ministerio: document.getElementById('ministerio-laico')?.value,
+                                foto: document.getElementById('foto-laico-preview')?.src
+                            };
+
+                            if (laico.id) {
+                                const index = laicos.findIndex(l => l.id == laico.id);
+                                laicos[index] = laico;
+                            } else {
+                                laico.id = laicos.length + 1;
+                                laicos.push(laico);
+                            }
+
+                            actualizarListaLaicos();
+                            formLaico.reset();
+                            if (document.getElementById('foto-laico-preview')) {
+                                document.getElementById('foto-laico-preview').src = 'placeholder.jpg';
+                            }
+                            buscarLaico.value = '';
+                        } catch (error) {
+                            console.error("Error al procesar el formulario:", error);
+                        }
+                    };
+                }
+
+                buscarLaico.addEventListener('input', (e) => {
+                    const busqueda = e.target.value;
+                    const laicosFiltrados = filtrarLaicos(busqueda);
+                    actualizarListaLaicos(laicosFiltrados);
+                });
+
+                const fotoLaicoInput = document.getElementById('foto-laico');
+                if (fotoLaicoInput) {
+                    fotoLaicoInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const fotoPreview = document.getElementById('foto-laico-preview');
+                                if (fotoPreview) {
+                                    fotoPreview.src = e.target.result;
+                                }
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                actualizarListaLaicos();
+            }
+
+            function mostrarAdminCatalogos() {
+                mainContent.innerHTML = `
+                    <div class="header">
+                        <h1>Administración de Catálogos Administrativos</h1>
+                    </div>
+                    <div class="admin-catalogos">
+                        <div class="catalogo-cuentas">
+                            <h2>Catálogo de Cuentas Contables</h2>
+                            <ul id="lista-cuentas-contables"></ul>
+                            <form id="form-cuenta-contable">
+                                <input type="hidden" id="cuenta-id">
+                                <label for="numero-cuenta">Número de Cuenta:</label>
+                                <input type="text" id="numero-cuenta" required>
+                                <label for="descripcion-cuenta">Descripción:</label>
+                                <input type="text" id="descripcion-cuenta" required>
+                                <button type="submit">Guardar Cuenta</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+
+                if (!document.getElementById('form-cuenta-contable')) {
+                    console.error("No se pudo encontrar el formulario de cuenta contable");
+                    return;
+                }
+
+                let cuentasContables = [
+                    { id: 1, numero: '4101', descripcion: 'Ingresos por Donaciones' },
+                    { id: 2, numero: '4102', descripcion: 'Ingresos por Diezmos' },
+                    { id: 3, numero: '5101', descripcion: 'Gastos Administrativos' }
+                ];
+
+                function actualizarListaCuentas() {
+                    const listaCuentas = document.getElementById('lista-cuentas-contables');
+                    listaCuentas.innerHTML = '';
+                    cuentasContables.forEach(cuenta => {
+                        const li = document.createElement('li');
+                        li.textContent = `${cuenta.numero} - ${cuenta.descripcion}`;
+                        li.onclick = () => cargarCuenta(cuenta);
+                        listaCuentas.appendChild(li);
+                    });
+                }
+
+                function cargarCuenta(cuenta) {
+                    document.getElementById('cuenta-id').value = cuenta.id;
+                    document.getElementById('numero-cuenta').value = cuenta.numero;
+                    document.getElementById('descripcion-cuenta').value = cuenta.descripcion;
+                }
+
+                const formCuentaContable = document.getElementById('form-cuenta-contable');
+                formCuentaContable.onsubmit = (e) => {
+                    e.preventDefault();
+                    const cuenta = {
+                        id: document.getElementById('cuenta-id').value,
+                        numero: document.getElementById('numero-cuenta').value,
+                        descripcion: document.getElementById('descripcion-cuenta').value
+                    };
+
+                    if (cuenta.id) {
+                        const index = cuentasContables.findIndex(c => c.id == cuenta.id);
+                        cuentasContables[index] = cuenta;
+                    } else {
+                        cuenta.id = cuentasContables.length + 1;
+                        cuentasContables.push(cuenta);
+                    }
+
+                    actualizarListaCuentas();
+                    formCuentaContable.reset();
+                };
+
+                actualizarListaCuentas();
+            }
+
+            function mostrarAdminParroquias() {
+                mainContent.innerHTML = `
+                    <div class="header">
+                        <h1>Administración de Parroquias</h1>
+                    </div>
+                    <div class="admin-parroquias">
+                        <div class="lista-parroquias">
+                            <h2>Lista de Parroquias</h2>
+                            <input type="text" id="buscar-parroquia" placeholder="Buscar parroquia...">
+                            <ul id="lista-parroquias">
+                            </ul>
+                        </div>
+                        <div class="formulario-parroquia">
+                            <h2>Agregar/Editar Parroquia</h2>
+                            <form id="form-parroquia">
+                                <input type="hidden" id="parroquia-id">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="numero-parroquia">Número de la Parroquia:</label>
+                                        <input type="text" id="numero-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre-parroquia">Nombre de la Parroquia:</label>
+                                        <input type="text" id="nombre-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rfc-parroquia">RFC:</label>
+                                        <input type="text" id="rfc-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calle-parroquia">Calle:</label>
+                                        <input type="text" id="calle-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numero-exterior-parroquia">Número Exterior:</label>
+                                        <input type="text" id="numero-exterior-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="colonia-parroquia">Colonia:</label>
+                                        <input type="text" id="colonia-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ciudad-parroquia">Ciudad:</label>
+                                        <input type="text" id="ciudad-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="estado-parroquia">Estado:</label>
+                                        <input type="text" id="estado-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pais-parroquia">País:</label>
+                                        <input type="text" id="pais-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codigo-postal-parroquia">Código Postal:</label>
+                                        <input type="text" id="codigo-postal-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono-parroquia">Teléfono:</label>
+                                        <input type="tel" id="telefono-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-parroquia">Email:</label>
+                                        <input type="email" id="email-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zona-pastoral-parroquia">Zona Pastoral:</label>
+                                        <select id="zona-pastoral-parroquia" required>
+                                            <option value="">Seleccione una zona</option>
+                                            <option value="Nueva Vizcaya">Nueva Vizcaya</option>
+                                            <option value="San Miguel">San Miguel</option>
+                                            <option value="San Juan Bautista">San Juan Bautista</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clasificacion-parroquia">Clasificación:</label>
+                                        <select id="clasificacion-parroquia" required>
+                                            <option value="">Seleccione una clasificación</option>
+                                            <option value="Urbana">Urbana</option>
+                                            <option value="Rural">Rural</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="parroco-parroquia">Párroco:</label>
+                                        <input type="text" id="parroco-parroquia" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vicario-parroquia">Vicario:</label>
+                                        <input type="text" id="vicario-parroquia">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fecha-ereccion-parroquia">Fecha de Erección:</label>
+                                        <input type="date" id="fecha-ereccion-parroquia" required>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="horarios-misa-parroquia">Horarios de Misa:</label>
+                                        <textarea id="horarios-misa-parroquia" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit">Guardar Parroquia</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+
+                const formParroquia = document.getElementById('form-parroquia');
+                if (!formParroquia) {
+                    console.error("No se pudo encontrar el formulario de parroquia");
+                    return;
+                }
+
+                let parroquias = [
+                    { id: 1, numero: '001', nombre: 'San Juan Bautista', rfc: 'XEXX010101000', calle: 'Calle Principal 123', numeroExterior: '1', colonia: 'Centro', ciudad: 'Ciudad de México', estado: 'CDMX', pais: 'México', codigoPostal: '01000', telefono: '555-1234', email: 'sanjuan@ejemplo.com', zonaPastoral: 'Nueva Vizcaya', clasificacion: 'Urbana', parroco: 'P. Juan Pérez', vicario: 'P. Pedro Gómez', fechaEreccion: '1950-05-15', horariosMisa: 'Lunes a Viernes: 8:00 AM\nSábados: 7:00 PM\nDomingos: 8:00 AM, 11:00 AM, 7:00 PM' },
+                    { id: 2, numero: '002', nombre: 'Nuestra Señora de Guadalupe', rfc: 'XEXX020202000', calle: 'Avenida Central 456', numeroExterior: '2', colonia: 'Guadalupe', ciudad: 'Ciudad de México', estado: 'CDMX', pais: 'México', codigoPostal: '02000', telefono: '555-5678', email: 'guadalupe@ejemplo.com', zonaPastoral: 'San Miguel', clasificacion: 'Urbana', parroco: 'P. Carlos Rodríguez', vicario: '', fechaEreccion: '1975-12-12', horariosMisa: 'Lunes a Sábado: 7:00 AM\nDomingos: 7:00 AM, 10:00 AM, 6:00 PM' },
+                    { id: 3, numero: '003', nombre: 'San Francisco de Asís', rfc: 'XEXX030303000', calle: 'Plaza Mayor 789', numeroExterior: '3', colonia: 'Asís', ciudad: 'Ciudad de México', estado: 'CDMX', pais: 'México', codigoPostal: '03000', telefono: '555-9012', email: 'francisco@ejemplo.com', zonaPastoral: 'San Juan Bautista', clasificacion: 'Rural', parroco: 'P. Miguel Ángel López', vicario: 'P. José Torres', fechaEreccion: '1990-10-04', horariosMisa: 'Martes a Sábado: 6:30 PM\nDomingos: 9:00 AM, 12:00 PM' }
+                ];
+
+                function filtrarParroquias(busqueda) {
+                    return parroquias.filter(parroquia => 
+                        parroquia.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        parroquia.numero.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        parroquia.ciudad.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        parroquia.zonaPastoral.toLowerCase().includes(busqueda.toLowerCase())
+                    );
+                }
+
+                function actualizarListaParroquias(parroquiasFiltradas = parroquias) {
+                    const listaParroquias = document.getElementById('lista-parroquias');
+                    listaParroquias.innerHTML = '';
+                    parroquiasFiltradas.forEach(parroquia => {
+                        const li = document.createElement('li');
+                        li.textContent = `${parroquia.numero} - ${parroquia.nombre} (${parroquia.ciudad})`;
+                        li.onclick = () => cargarParroquia(parroquia);
+                        listaParroquias.appendChild(li);
+                    });
+                }
+
+                const buscarParroquia = document.getElementById('buscar-parroquia');
+                buscarParroquia.addEventListener('input', (e) => {
+                    const busqueda = e.target.value;
+                    const parroquiasFiltradas = filtrarParroquias(busqueda);
+                    actualizarListaParroquias(parroquiasFiltradas);
+                });
+
+                actualizarListaParroquias();
+            }
+
+            function mostrarConsultaActas() {
+                mainContent.innerHTML = `
+                    <div class="header">
+                        <h1>Consulta de Actas Sacramentales</h1>
+                    </div>
+                    <div class="consulta-actas">
+                        <div class="filtros-actas">
+                            <h2>Filtros de Búsqueda</h2>
+                            <form id="form-consulta-actas">
+                                <div class="form-group">
+                                    <label for="tipo-acta">Tipo de Acta:</label>
+                                    <select id="tipo-acta" required>
+                                        <option value="">Seleccione un tipo</option>
+                                        <option value="bautizo">Bautizo</option>
+                                        <option value="confirmacion">Confirmación</option>
+                                        <option value="matrimonio">Matrimonio</option>
+                                        <option value="primera-comunion">Primera Comunión</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="parroquia-acta">Parroquia:</label>
+                                    <select id="parroquia-acta" required>
+                                        <option value="">Seleccione una parroquia</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fecha-desde">Fecha Desde:</label>
+                                    <input type="date" id="fecha-desde" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fecha-hasta">Fecha Hasta:</label>
+                                    <input type="date" id="fecha-hasta" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre-persona">Nombre de la Persona:</label>
+                                    <input type="text" id="nombre-persona" placeholder="Nombre completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero-libro">Número de Libro:</label>
+                                    <input type="text" id="numero-libro" placeholder="Ejemplo: 001">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero-foja">Número de Foja:</label>
+                                    <input type="text" id="numero-foja" placeholder="Ejemplo: 123">
+                                </div>
+                                <button type="submit">Buscar</button>
+                            </form>
+                        </div>
+                        <div class="resultados-actas">
+                            <h2>Resultados de la Búsqueda</h2>
+                            <div class="resultados-controles">
+                                <button id="exportar-pdf">Exportar a PDF</button>
+                                <button id="exportar-excel">Exportar a Excel</button>
+                            </div>
+                            <table id="tabla-resultados-actas">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Acta</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha</th>
+                                        <th>Parroquia</th>
+                                        <th>Libro</th>
+                                        <th>Foja</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="paginacion">
+                                <button id="anterior-pagina">Anterior</button>
+                                <span id="pagina-actual">Página 1 de 1</span>
+                                <button id="siguiente-pagina">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const parroquiaSelect = document.getElementById('parroquia-acta');
+                parroquiaSelect.innerHTML = '<option value="">Seleccione una parroquia</option>';
+                parroquias.forEach(parroquia => {
+                    const option = document.createElement('option');
+                    option.value = parroquia.id;
+                    option.textContent = parroquia.nombre;
+                    parroquiaSelect.appendChild(option);
+                });
+
+                const formConsultaActas = document.getElementById('form-consulta-actas');
+                formConsultaActas.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const tipoActa = document.getElementById('tipo-acta').value;
+                    const parroquia = document.getElementById('parroquia-acta').value;
+                    const fechaDesde = document.getElementById('fecha-desde').value;
+                    const fechaHasta = document.getElementById('fecha-hasta').value;
+                    const nombrePersona = document.getElementById('nombre-persona').value;
+                    const numeroLibro = document.getElementById('numero-libro').value;
+                    const numeroFoja = document.getElementById('numero-foja').value;
+
+                    const resultados = buscarActasSacramentales(tipoActa, parroquia, fechaDesde, fechaHasta, nombrePersona, numeroLibro, numeroFoja);
+                    mostrarResultadosActas(resultados);
+                });
+
+                document.getElementById('exportar-pdf').addEventListener('click', exportarPDF);
+                document.getElementById('exportar-excel').addEventListener('click', exportarExcel);
+                document.getElementById('anterior-pagina').addEventListener('click', paginaAnterior);
+                document.getElementById('siguiente-pagina').addEventListener('click', paginaSiguiente);
+            }
+
+            let actasSacramentales = [
+                { id: 1, tipo: 'bautizo', nombre: 'Juan Pérez', fecha: '2023-01-15', parroquia: 1, libro: '001', foja: '001' },
+                { id: 2, tipo: 'confirmacion', nombre: 'María González', fecha: '2023-02-20', parroquia: 2, libro: '001', foja: '002' },
+                { id: 3, tipo: 'matrimonio', nombre: 'Carlos Rodríguez y Ana Martínez', fecha: '2023-03-10', parroquia: 3, libro: '002', foja: '003' },
+                { id: 4, tipo: 'primera-comunion', nombre: 'Luis García', fecha: '2023-04-05', parroquia: 1, libro: '002', foja: '004' },
+                { id: 5, tipo: 'bautizo', nombre: 'Sofia López', fecha: '2023-05-12', parroquia: 2, libro: '001', foja: '005' }
+            ];
+
+            let resultadosActuales = [];
+            let paginaActual = 1;
+            const resultadosPorPagina = 10;
+
+            function buscarActasSacramentales(tipo, parroquia, fechaDesde, fechaHasta, nombre, libro, foja) {
+                resultadosActuales = actasSacramentales.filter(acta => 
+                    (!tipo || acta.tipo === tipo) &&
+                    (!parroquia || acta.parroquia == parroquia) &&
+                    (!fechaDesde || acta.fecha >= fechaDesde) &&
+                    (!fechaHasta || acta.fecha <= fechaHasta) &&
+                    (!nombre || acta.nombre.toLowerCase().includes(nombre.toLowerCase())) &&
+                    (!libro || acta.libro === libro) &&
+                    (!foja || acta.foja === foja)
+                );
+                return resultadosActuales;
+            }
+
+            function mostrarResultadosActas(resultados) {
+                const tbody = document.querySelector('#tabla-resultados-actas tbody');
+                tbody.innerHTML = '';
+                const inicio = (paginaActual - 1) * resultadosPorPagina;
+                const fin = inicio + resultadosPorPagina;
+                const resultadosPaginados = resultados.slice(inicio, fin);
+                
+                resultadosPaginados.forEach(acta => {
+                    const parroquia = parroquias.find(p => p.id == acta.parroquia);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${acta.tipo.charAt(0).toUpperCase() + acta.tipo.slice(1)}</td>
+                        <td>${acta.nombre}</td>
+                        <td>${acta.fecha}</td>
+                        <td>${parroquia ? parroquia.nombre : 'N/A'}</td>
+                        <td>${acta.libro || 'N/A'}</td>
+                        <td>${acta.foja || 'N/A'}</td>
+                        <td><button onclick="verDetalleActa(${acta.id})">Ver Detalle</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                actualizarPaginacion(resultados.length);
+            }
+
+            function actualizarPaginacion(totalResultados) {
+                const totalPaginas = Math.ceil(totalResultados / resultadosPorPagina);
+                document.getElementById('pagina-actual').textContent = `Página ${paginaActual} de ${totalPaginas}`;
+            }
+        });
+    </script>
+</body>
+</html>
