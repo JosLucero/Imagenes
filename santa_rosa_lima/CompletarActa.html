@@ -1,0 +1,398 @@
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bautizos Digitales - Completar Acta</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #3a7bd5;
+    --secondary-color: #00d2ff;
+    --accent-color: #ff6b6b;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  nav ul li {
+    margin: 0 0.5rem;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  nav ul li a:hover {
+    color: var(--accent-color);
+  }
+
+  main {
+    display: flex;
+    height: calc(100vh - 120px); /* Adjust based on header and footer height */
+  }
+
+  .acta-preview {
+    flex: 1;
+    overflow: hidden;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .acta-preview h2 {
+    margin-bottom: 1rem;
+  }
+
+  .image-container {
+    overflow: auto;
+    max-height: calc(100vh - 250px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  #actaPreview {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="file"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+
+  .error {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  .file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .file-input-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .file-input-wrapper .btn-file-input {
+    background-color: var(--secondary-color);
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h2>Parroquia de Santa Rosa de Lima de (Durango/México)</h2>
+    <h1>Completar Acta de Bautizo</h1>
+  </header>
+
+  <main>
+    <div class="acta-preview">
+      <h2>Acta Previamente Registrada</h2>
+      <div class="file-input-wrapper">
+        <button class="btn-file-input">Cambiar imagen</button>
+        <input type="file" id="nuevaImagen" name="nuevaImagen" accept="image/*">
+      </div>
+      <div class="image-container">
+        <img id="actaPreview" alt="Imagen de un acta de bautizo parcialmente completada. El documento es una página de un libro de registros con texto manuscrito. Se pueden ver campos como 'Acta No.', 'En', 'Parroquia de', 'Arzobispado de', y otros detalles del bautizo." src="acta_previa.jpg" width="600" height="800">
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form id="completarActaForm">
+        <div class="form-group">
+          <label for="numeroActa">Número de Acta:</label>
+          <input type="text" id="numeroActa" name="numeroActa" value="379" required>
+        </div>
+
+        <div class="form-group">
+          <label for="parroquia">Parroquia:</label>
+          <input type="text" id="parroquia" name="parroquia" value="Sta Rosalía de Camargo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="arzobispado">Arzobispado:</label>
+          <input type="text" id="arzobispado" name="arzobispado" value="Durango" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaBautizo">Fecha de Bautizo:</label>
+          <input type="date" id="fechaBautizo" name="fechaBautizo" value="1971-12-19" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreSacerdote">Nombre del Sacerdote:</label>
+          <input type="text" id="nombreSacerdote" name="nombreSacerdote" value="Pablo Garza Reyes" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreBautizado">Nombre del Bautizado:</label>
+          <input type="text" id="nombreBautizado" name="nombreBautizado" value="Ricardo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="genero">Género:</label>
+          <select id="genero" name="genero" required>
+            <option value="niño" selected>Niño</option>
+            <option value="niña">Niña</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="lugarNacimiento">Lugar de Nacimiento:</label>
+          <input type="text" id="lugarNacimiento" name="lugarNacimiento" value="Sta Rosalía de Camargo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+          <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="1971-11-07" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombrePadre">Nombre del Padre:</label>
+          <input type="text" id="nombrePadre" name="nombrePadre" value="José Angel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreMadre">Nombre de la Madre:</label>
+          <input type="text" id="nombreMadre" name="nombreMadre" value="Ma. Dolores Mesta" required>
+        </div>
+
+        <div class="form-group">
+          <label for="abuelosPaternos">Abuelos Paternos:</label>
+          <input type="text" id="abuelosPaternos" name="abuelosPaternos" value="Ramón Delgado y Guadalupe Fuentes" required>
+        </div>
+
+        <div class="form-group">
+          <label for="abuelosMaternos">Abuelos Maternos:</label>
+          <input type="text" id="abuelosMaternos" name="abuelosMaternos" value="Jesús Mesta y Nicolasa Zamora" required>
+        </div>
+
+        <div class="form-group">
+          <label for="padrinos">Padrinos:</label>
+          <input type="text" id="padrinos" name="padrinos" value="Manuel Tena y Alicia Mesta de Tena" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notas">Notas Adicionales:</label>
+          <textarea id="notas" name="notas" rows="4"></textarea>
+        </div>
+
+        <button type="submit">Completar Acta</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Bautizos Digitales. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const form = document.getElementById('completarActaForm');
+      const imageInput = document.getElementById('nuevaImagen');
+      const imagePreview = document.getElementById('actaPreview');
+      const imageContainer = document.querySelector('.image-container');
+      
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Validación de campos
+        let isValid = true;
+        const requiredFields = form.querySelectorAll('[required]');
+        
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            showError(field, 'Este campo es obligatorio');
+          } else {
+            clearError(field);
+          }
+        });
+
+        if (isValid) {
+          // Aquí iría la lógica para enviar los datos al servidor
+          alert('Acta completada con éxito');
+          // No reseteamos el formulario para mantener los datos precargados
+        }
+      });
+
+      function showError(field, message) {
+        clearError(field);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error';
+        errorDiv.innerText = message;
+        field.parentNode.appendChild(errorDiv);
+        field.style.borderColor = 'var(--accent-color)';
+      }
+
+      function clearError(field) {
+        const errorDiv = field.parentNode.querySelector('.error');
+        if (errorDiv) {
+          errorDiv.remove();
+        }
+        field.style.borderColor = '#ccc';
+      }
+
+      // Zoom functionality
+      let scale = 1;
+      const ZOOM_SPEED = 0.1;
+
+      imageContainer.addEventListener('wheel', function(e) {
+        if (e.ctrlKey) {
+          e.preventDefault();
+          const delta = e.deltaY > 0 ? -1 : 1;
+          scale += delta * ZOOM_SPEED;
+          scale = Math.min(Math.max(0.5, scale), 3);
+          imagePreview.style.transform = `scale(${scale})`;
+        }
+      });
+
+      // Drag functionality
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
+
+      imageContainer.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        startX = e.pageX - imageContainer.offsetLeft;
+        startY = e.pageY - imageContainer.offsetTop;
+        scrollLeft = imageContainer.scrollLeft;
+        scrollTop = imageContainer.scrollTop;
+      });
+
+      imageContainer.addEventListener('mouseleave', function() {
+        isDragging = false;
+      });
+
+      imageContainer.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+
+      imageContainer.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - imageContainer.offsetLeft;
+        const y = e.pageY - imageContainer.offsetTop;
+        const walkX = (x - startX) * 2;
+        const walkY = (y - startY) * 2;
+        imageContainer.scrollLeft = scrollLeft - walkX;
+        imageContainer.scrollTop = scrollTop - walkY;
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,496 @@
+<html><head><base href="https://bautizos-digitales.com/RegistrarActa%20Con%20el%20Apellido%20Paterno%20del%20Bautizado%20puedes%20asignar%20de%20forma%20automatica%20el%20Apellido%20Paterno%20del%20Padre%20y%20de%20la%20misma%20forma%20con%20el%20de%20la%20madre">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bautizos Digitales - Registro Detallado de Actas</title>
+<style>
+  :root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #e74c3c;
+    --background-color: #f5f7fa;
+    --text-color: #34495e;
+    --border-color: #bdc3c7;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  h1, h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .form-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .form-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
+
+  button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  button:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .file-upload:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.05);
+  }
+
+  #preview {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .keyboard-shortcuts {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .keyboard-shortcuts h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .keyboard-shortcuts ul {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .keyboard-shortcuts li {
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  @media (max-width: 768px) {
+      .header-content {
+    form {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hint {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+</style>
+</head>
+<body>
+  <header>
+		    <h2 style="color: white" >Parroquia de Santa Rosa de Lima de (Durango/México)</h2>
+			<h1 style="color: white" >Bautizos Digitales</h1>
+  </header>
+
+  <main>
+    <h2>Registro Detallado de Actas de Bautizo</h2>
+    <form id="bautizo-form">
+      <div class="form-section">
+        <h3>Información del Registro y Parroquia</h3>
+        <div class="form-group">
+          <label for="libro">Número de Libro:</label>
+          <input type="text" id="libro" name="libro" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="folio">Número de Folio:</label>
+          <input type="text" id="folio" name="folio" required>
+        </div>
+        <div class="form-group">
+          <label for="numero">Número de Acta:</label>
+          <input type="text" id="numero" name="numero" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha_registro">Fecha de Registro:</label>
+          <input type="text" id="fecha_registro" name="fecha_registro" placeholder="dd-mm-aaaa" required pattern="\d{2}-\d{2}-\d{4}">
+        </div>
+        <div class="form-group">
+          <label for="parroquia">Parroquia:</label>
+          <input type="text" id="parroquia" name="parroquia" required>
+        </div>
+        <div class="form-group">
+          <label for="ministro">Nombre del Sacerdote:</label>
+          <input type="text" id="ministro" name="ministro" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Información del Bautizado</h3>
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="apellido_paterno">Apellido Paterno:</label>
+          <input type="text" id="apellido_paterno" name="apellido_paterno" required>
+          <div class="hint">Se asignará automáticamente al Apellido Paterno del Padre</div>
+        </div>
+        <div class="form-group">
+          <label for="apellido_materno">Apellido Materno:</label>
+          <input type="text" id="apellido_materno" name="apellido_materno" required>
+          <div class="hint">Se asignará automáticamente al Apellido Paterno de la Madre</div>
+        </div>
+        <div class="form-group">
+          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+          <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="dd-mm-aaaa" required pattern="\d{2}-\d{2}-\d{4}">
+        </div>
+        <div class="form-group">
+          <label for="fecha_bautizo">Fecha de Bautizo:</label>
+          <input type="text" id="fecha_bautizo" name="fecha_bautizo" placeholder="dd-mm-aaaa" required pattern="\d{2}-\d{2}-\d{4}">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Información de los Padres</h3>
+        <div class="form-group">
+          <label for="padre_nombre">Nombre del Padre:</label>
+          <input type="text" id="padre_nombre" name="padre_nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="padre_apellido_paterno">Apellido Paterno del Padre:</label>
+          <input type="text" id="padre_apellido_paterno" name="padre_apellido_paterno" required readonly>
+          <div class="hint">Asignado automáticamente del Apellido Paterno del Bautizado</div>
+        </div>
+        <div class="form-group">
+          <label for="padre_apellido_materno">Apellido Materno del Padre:</label>
+          <input type="text" id="padre_apellido_materno" name="padre_apellido_materno" required>
+        </div>
+        <div class="form-group">
+          <label for="madre_nombre">Nombre de la Madre:</label>
+          <input type="text" id="madre_nombre" name="madre_nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="madre_apellido_paterno">Apellido Paterno de la Madre:</label>
+          <input type="text" id="madre_apellido_paterno" name="madre_apellido_paterno" required readonly>
+          <div class="hint">Asignado automáticamente del Apellido Materno del Bautizado</div>
+        </div>
+        <div class="form-group">
+          <label for="madre_apellido_materno">Apellido Materno de la Madre:</label>
+          <input type="text" id="madre_apellido_materno" name="madre_apellido_materno" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Información de los Padrinos</h3>
+        <div class="form-group">
+          <label for="padrino">Nombre del Padrino:</label>
+          <input type="text" id="padrino" name="padrino" required>
+        </div>
+        <div class="form-group">
+          <label for="madrina">Nombre de la Madrina:</label>
+          <input type="text" id="madrina" name="madrina" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Notas Adicionales</h3>
+        <div class="form-group">
+          <label for="notas">Notas:</label>
+          <textarea id="notas" name="notas" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Documento Digital</h3>
+        <div class="form-group file-upload">
+          <label for="acta_scan">Escaneo del Acta:</label>
+          <input type="file" id="acta_scan" name="acta_scan" accept="image/*">
+          <img id="preview" src="#" alt="Vista previa del escaneo" style="display: none;">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <button type="submit">Registrar Acta</button>
+      </div>
+    </form>
+
+    <div class="keyboard-shortcuts">
+      <h3>Atajos de Teclado</h3>
+      <ul>
+        <li><strong>Ctrl + S:</strong> Guardar acta</li>
+        <li><strong>Ctrl + N:</strong> Nuevo registro</li>
+        <li><strong>Ctrl + F:</strong> Buscar acta</li>
+        <li><strong>Tab:</strong> Navegar entre campos</li>
+      </ul>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('bautizo-form');
+    const fileInput = document.getElementById('acta_scan');
+    const preview = document.getElementById('preview');
+
+    // Manejar la vista previa de la imagen
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Envío del formulario
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Aquí iría la lógica para enviar los datos del formulario al servidor
+      alert('Acta de bautizo registrada con éxito!');
+      form.reset();
+      preview.src = '#';
+      preview.style.display = 'none';
+    });
+
+    // Validación de fechas
+    const fechaNacimiento = document.getElementById('fecha_nacimiento');
+    const fechaBautizo = document.getElementById('fecha_bautizo');
+    const fechaRegistro = document.getElementById('fecha_registro');
+
+    function validarFecha(input) {
+      const regex = /^(\d{2})-(\d{2})-(\d{4})$/;
+      if (!regex.test(input.value)) {
+        input.setCustomValidity('Por favor, ingrese la fecha en el formato dd-mm-aaaa');
+      } else {
+        input.setCustomValidity('');
+      }
+    }
+
+    fechaNacimiento.addEventListener('input', function() { validarFecha(this); });
+    fechaBautizo.addEventListener('input', function() { validarFecha(this); });
+    fechaRegistro.addEventListener('input', function() { validarFecha(this); });
+
+    fechaBautizo.addEventListener('change', function() {
+      if (fechaNacimiento.value && fechaBautizo.value) {
+        const [diaN, mesN, anioN] = fechaNacimiento.value.split('-');
+        const [diaB, mesB, anioB] = fechaBautizo.value.split('-');
+        const nacimiento = new Date(anioN, mesN - 1, diaN);
+        const bautizo = new Date(anioB, mesB - 1, diaB);
+        if (bautizo < nacimiento) {
+          alert('La fecha de bautizo no puede ser anterior a la fecha de nacimiento.');
+          fechaBautizo.value = '';
+        }
+      }
+    });
+
+    // Autocompletar parroquia
+    const parroquia = document.getElementById('parroquia');
+    const parroquias = [
+      'Catedral Metropolitana',
+      'Nuestra Señora de Guadalupe',
+      'San Francisco de Asís',
+      'Santa María de la Asunción',
+      'San Juan Bautista'
+    ];
+
+    // Implementar autocompletado personalizado
+    parroquia.addEventListener('input', function() {
+      const val = this.value.toLowerCase();
+      const matches = parroquias.filter(p => p.toLowerCase().startsWith(val));
+      if (matches.length > 0) {
+        const datalist = document.createElement('datalist');
+        datalist.id = 'parroquias-list';
+        matches.forEach(match => {
+          const option = document.createElement('option');
+          option.value = match;
+          datalist.appendChild(option);
+        });
+        if (document.getElementById('parroquias-list')) {
+          document.getElementById('parroquias-list').remove();
+        }
+        document.body.appendChild(datalist);
+        this.setAttribute('list', 'parroquias-list');
+      }
+    });
+
+    // Atajos de teclado
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        form.dispatchEvent(new Event('submit'));
+      } else if (e.ctrlKey && e.key === 'n') {
+        e.preventDefault();
+        form.reset();
+        document.getElementById('libro').focus();
+      } else if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        // Implementar función de búsqueda
+        alert('Función de búsqueda (a implementar)');
+      }
+    });
+
+    // Navegación rápida entre campos
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach((input, index) => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const nextInput = inputs[index + 1] || inputs[0];
+          nextInput.focus();
+        }
+      });
+    });
+
+    // Animación de botón
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.addEventListener('mouseover', () => {
+      submitButton.style.transform = 'translateY(-2px)';
+    });
+    submitButton.addEventListener('mouseout', () => {
+      submitButton.style.transform = 'translateY(0)';
+    });
+
+    // Guardar datos localmente
+    form.addEventListener('input', function() {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      localStorage.setItem('bautizo_form_data', JSON.stringify(data));
+    });
+
+    // Cargar datos guardados al iniciar
+    window.addEventListener('load', function() {
+      const savedData = localStorage.getItem('bautizo_form_data');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        Object.keys(data).forEach(key => {
+          const input = form.elements[key];
+          if (input) {
+            input.value = data[key];
+          }
+        });
+      }
+    });
+
+    // Asignar automáticamente apellidos
+    const apellidoPaternoBautizado = document.getElementById('apellido_paterno');
+    const apellidoMaternoBautizado = document.getElementById('apellido_materno');
+    const apellidoPaternoPadre = document.getElementById('padre_apellido_paterno');
+    const apellidoPaternoMadre = document.getElementById('madre_apellido_paterno');
+
+    apellidoPaternoBautizado.addEventListener('input', function() {
+      apellidoPaternoPadre.value = this.value;
+    });
+
+    apellidoMaternoBautizado.addEventListener('input', function() {
+      apellidoPaternoMadre.value = this.value;
+    });
+  </script>
+</body></html>

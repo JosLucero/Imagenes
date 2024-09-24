@@ -1,0 +1,365 @@
+<!DOCTYPE html><html><head><base href="https://bautizos-digitales.com/RegistrarActaBasica%20Agrega%20la%20informaci%C3%B3n%20de%20Parroquia">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar Acta Básica - Bautizos Digitales</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&amp;family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #3a7bd5;
+    --secondary-color: #00d2ff;
+    --accent-color: #ff6b6b;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  nav ul li {
+    margin: 0 1rem;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  nav ul li a:hover {
+    color: var(--accent-color);
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .date-input {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .date-input input {
+    width: calc(33.33% - 0.33rem);
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .file-label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .file-label:hover {
+    background-color: var(--secondary-color);
+  }
+
+  button[type="submit"] {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #ff5252;
+  }
+
+  footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+  }
+
+  #imagePreview {
+    grid-column: 1 / -1;
+    max-width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 5px;
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    form {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h2>Parroquia de Santa Rosa de Lima de (Durango/México)</h2>
+    <h1>Registrar Acta Básica</h1>
+  </header>
+
+  <main>
+    <form id="actaBasicaForm">
+      <div class="form-group">
+        <label for="parroquia">Parroquia</label>
+        <select id="parroquia" name="parroquia" required="">
+          <option value="">Seleccione una parroquia</option>
+          <option value="san_francisco">San Francisco de Asís</option>
+          <option value="santa_maria">Santa María de Guadalupe</option>
+          <option value="san_juan">San Juan Bautista</option>
+          <option value="sagrado_corazon">Sagrado Corazón de Jesús</option>
+          <option value="nuestra_senora">Nuestra Señora de Fátima</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="numeroLibro">Número de Libro</label>
+        <input type="number" id="numeroLibro" name="numeroLibro" required="">
+      </div>
+      <div class="form-group">
+        <label for="folio">Folio</label>
+        <input type="number" id="folio" name="folio" required="">
+      </div>
+      <div class="form-group">
+        <label for="numeroActa">Número de Acta</label>
+        <input type="number" id="numeroActa" name="numeroActa" required="">
+      </div>
+      <div class="form-group">
+        <label for="nombres">Nombres</label>
+        <input type="text" id="nombres" name="nombres" required="">
+      </div>
+      <div class="form-group">
+        <label for="apellidoPaterno">Apellido Paterno</label>
+        <input type="text" id="apellidoPaterno" name="apellidoPaterno" required="">
+      </div>
+      <div class="form-group">
+        <label for="apellidoMaterno">Apellido Materno</label>
+        <input type="text" id="apellidoMaterno" name="apellidoMaterno" required="">
+      </div>
+      <div class="form-group">
+        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+        <div class="date-input">
+          <input type="number" id="diaNacimiento" name="diaNacimiento" min="1" max="31" placeholder="DD" required="">
+          <input type="number" id="mesNacimiento" name="mesNacimiento" min="1" max="12" placeholder="MM" required="">
+          <input type="number" id="anioNacimiento" name="anioNacimiento" min="1900" max="2099" placeholder="AAAA" required="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fechaBautismo">Fecha de Bautismo</label>
+        <div class="date-input">
+          <input type="number" id="diaBautismo" name="diaBautismo" min="1" max="31" placeholder="DD" required="">
+          <input type="number" id="mesBautismo" name="mesBautismo" min="1" max="12" placeholder="MM" required="">
+          <input type="number" id="anioBautismo" name="anioBautismo" min="1900" max="2099" placeholder="AAAA" required="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="nombrePadre">Nombre del Padre</label>
+        <input type="text" id="nombrePadre" name="nombrePadre" required="">
+      </div>
+      <div class="form-group">
+        <label for="nombreMadre">Nombre de la Madre</label>
+        <input type="text" id="nombreMadre" name="nombreMadre" required="">
+      </div>
+      <div class="form-group">
+        <label for="nombrePadrino">Nombre del Padrino</label>
+        <input type="text" id="nombrePadrino" name="nombrePadrino" required="">
+      </div>
+      <div class="form-group">
+        <label for="nombreMadrina">Nombre de la Madrina</label>
+        <input type="text" id="nombreMadrina" name="nombreMadrina" required="">
+      </div>
+      <div class="form-group">
+        <label for="imagenActa" class="file-label">Subir Imagen del Acta</label>
+        <input type="file" id="imagenActa" name="imagenActa" accept="image/*" class="file-input">
+      </div>
+      <img id="imagePreview" alt="Vista previa de la imagen del acta" src="" width="300" height="200">
+      <button type="submit">Registrar Acta Básica</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© 2024 Bautizos Digitales. Todos los derechos reservados ADSSistemas</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('actaBasicaForm');
+      const imageInput = document.getElementById('imagenActa');
+      const imagePreview = document.getElementById('imagePreview');
+
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (validateForm()) {
+          // Aquí puedes agregar la lógica para enviar los datos al servidor
+          alert('Acta básica registrada con éxito');
+        }
+      });
+
+      // Validación de fechas
+      const fechaNacimientoInputs = [
+        document.getElementById('diaNacimiento'),
+        document.getElementById('mesNacimiento'),
+        document.getElementById('anioNacimiento')
+      ];
+      const fechaBautismoInputs = [
+        document.getElementById('diaBautismo'),
+        document.getElementById('mesBautismo'),
+        document.getElementById('anioBautismo')
+      ];
+
+      function validateDate(inputs) {
+        const [day, month, year] = inputs.map(input => parseInt(input.value, 10));
+        const date = luxon.DateTime.local(year, month, day);
+        return date.isValid;
+      }
+
+      function validateDates() {
+        const nacimientoValido = validateDate(fechaNacimientoInputs);
+        const bautismoValido = validateDate(fechaBautismoInputs);
+
+        if (!nacimientoValido) {
+          alert('La fecha de nacimiento no es válida');
+          return false;
+        }
+        if (!bautismoValido) {
+          alert('La fecha de bautismo no es válida');
+          return false;
+        }
+
+        const fechaNacimiento = luxon.DateTime.fromObject({
+          day: parseInt(fechaNacimientoInputs[0].value, 10),
+          month: parseInt(fechaNacimientoInputs[1].value, 10),
+          year: parseInt(fechaNacimientoInputs[2].value, 10)
+        });
+        const fechaBautismo = luxon.DateTime.fromObject({
+          day: parseInt(fechaBautismoInputs[0].value, 10),
+          month: parseInt(fechaBautismoInputs[1].value, 10),
+          year: parseInt(fechaBautismoInputs[2].value, 10)
+        });
+
+        if (fechaBautismo < fechaNacimiento) {
+          alert('La fecha de bautismo no puede ser anterior a la fecha de nacimiento');
+          return false;
+        }
+
+        return true;
+      }
+
+      function validateForm() {
+        if (!validateDates()) {
+          return false;
+        }
+
+        const parroquia = document.getElementById('parroquia');
+        if (parroquia.value === "") {
+          alert('Por favor, seleccione una parroquia');
+          return false;
+        }
+
+        return true;
+      }
+    });
+  </script>
+
+</body></html>
